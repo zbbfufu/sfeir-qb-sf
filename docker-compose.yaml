@@ -1,0 +1,57 @@
+version: '3'
+services:
+  nginx:
+    build: nginx
+    ports:
+    - "80:80"
+    - "443:443"
+    depends_on:
+    - scm
+    - jenkins
+    - sonar
+    - nexus
+  scm:
+    build: ./scm
+    image: zbbfufu/jenkins:latest
+    volumes:
+      - sources:/home/scm
+  jenkins:
+    image: jenkins:alpine
+    environment:
+    - JENKINS_OPTS=--prefix=/jenkins
+    volumes:
+    - jenkins-data:/var/jenkins_home
+    ports:
+    - "8080:8080"
+    depends_on:
+      - scm
+      - sonar
+      - nexus
+  sonar:
+    build: sonar
+    volumes:
+    - sonar-data:/opt/sonarqube/data
+    #environment:
+    #- SONARQUBE_JDBC_URL=jdbc:postgresql://pgsql
+    #- SONARQUBE_JDBC_USERNAME=
+    #- SONARQUBE_JDBC_PASSWORD=
+    ports:
+    - "9000:9000"
+    depends_on:
+      - scm
+  nexus:
+    build: nexus
+    ports:
+    - "8081:8081"
+    volumes:
+    - nexus-repo:/nexus-data
+
+volumes:
+  sources:
+    driver: local
+  jenkins-data:
+    driver: local
+  sonar-data:
+    driver: local
+  nexus-repo:
+    driver: local

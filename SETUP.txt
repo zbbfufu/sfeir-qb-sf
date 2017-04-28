@@ -1,0 +1,41 @@
+Launch stack
+$ docker-compose up
+
+# Docker stack deploy requires registry to build and deploy images at launch
+# $ docker stack deploy -c docker-compose.yml sfeirsf
+
+SCM MANAGER
+  http://localhost/scm
+  --> Replace local tgz by download from scmmanager website in Dockerfile
+  - Password: scmadmin/scmadmin
+  - Config > Allow anonymous
+  - Create public git repository sfeir-demo
+    -> http://localhost/scm/git/sfeir-demo
+
+JENKINS
+  http://localhost/jenkins
+
+  --> See for bad proxy config ?
+  - get password in logs
+  - follow setup wizard (incl. plugin installation)
+  - create admin account ( admin/password "Administrateur" )
+  - create multibranch pipeline job, checkout http://localhost/scm/git/sfeir-demo
+
+
+NEXUS
+  http://localhost/nexus
+  - context-path config: override 'nexus-default.properties' from Dockerfile
+    - nexus-context-path=/nexus
+
+SONAR
+  - Proxy confix: uncomment 'sonar.web.context=/sonar' in /opt/sonarqube/conf/sonar.properties
+
+
+PROJECT
+  - create pom with:
+    - mirror/distribution repositories to nexus
+    - sonar analysis to http://localhost/sonar ?
+  - create Jenkinsfile using some jdk8-maven3 docker container
+
+BONUS
+  Build docker image and launch it from jenkins ?
