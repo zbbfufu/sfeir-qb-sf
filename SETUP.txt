@@ -4,6 +4,10 @@ $ docker-compose up
 # Docker stack deploy requires registry to build and deploy images at launch
 # $ docker stack deploy -c docker-compose.yml sfeirsf
 
+DNS:
+- add sf.sfeir.com on host '/etc/hosts' for 127.0.0.1
+- add sf.sfeir.com as nginx alias
+
 SCM MANAGER
   http://localhost/scm
   --> Replace local tgz by download from scmmanager website in Dockerfile
