@@ -1,0 +1,107 @@
+= Know your Software Factory
+
+== Qui suis-je ?
+Julien Furgerot
+
+*Artisan-développeur*
+
+_Du sur-mesure avec des méthodes industrielles_
+
+
+== Ma vision des outils
+
+Vision subjective par rapport à mon expérience, à adapter au contexte.
+
+* Versioning
+* Fail fast
+* Quality
+* Build once, deploy everywhere
+
+== Démonstration
+=== Scm Manager
+Gestionnaire de source, à minima un historique, des branches et des tags
+
+C'est bien pour la démo ou pour une startup/PME, sinon préférez Github Enterprise
+
+Svn/git/mercurial... et plein de plugins
+
+=== Jenkins
+Trop cool la version 2 avec _BlueOcean_ et les pipelines !
+
+Idéal pour les _features branch_
+
+=== Sonar
+Révèle parfois des bugs fonctionnels `// *TODO* : trouver un example`
+
+Highlight sur la _période de grâce_ `// *FIXME* : retrouver le nom de ce truc`
+
+=== Nexus
+Ou Artifactory
+
+Ou Archiva..., non pas Archiva
+
+=== Maven
+Besoin de le présenter ?
+Graddle fonctionne aussi, ça a l'air vachement bien
+
+
+== Sous le capot
+=== Docker pour démarrer vite
+* Le `sf.sfeir.com` et c'est pour l'effet Whaou ! 5 ports suffisent
+* Gestion des accès à confier à un LDAP/AD (qui peut tourner sous Docker)
+
+=== ScmManager
+Configurer des utilisateurs R/W pour les dev, et un utilisateur R/O pour Jenkins
+
+=== Nexus
+Configurer un utilisateur pour Jenkins (déploiement)
+
+=== Sonar
+Configurer un utilisateur pour Jenkins (envoi des résultats d'analyse)
+
+=== Maven
+* pom.xml
+** distribution management pour déployer sur Nexus
+** plugins Jacoco (couverture de code par les tests) et SonarQube (analyse qualité)
+
+* settings.xml
+** Nexus comme miroir vers tous les dépôts Maven
+** Des identifiants pour déployer sur le Nexus
+
+=== Jenkins
+* Un wizard pour installer les plugins et créer le premier administrateur `<screenshots here>`
+* Déclarer un Maven installé ou un installeur `<screenshots here>`
+* Déclarer le serveur SonarQube `<screenshots here>`
+
+* Créer un job multibranches (checkout git)
+
+=== Jenkinsfile
+* À la racine du dépôt git
+* Pipeline en mode script Groovy ou mode déclaratif
+
+* Suite de _stages_ exécutant les commandes du build
+** *build* : `mvn clean package` sans tests
+** *test* : `mvn test`,
+*** Exécute tous les tests, le build passe en _unstable_ si un ou plusieurs des tests échoue
+*** Jacoco (pom.xml) instrumente le code pour tracer la couverture
+** *sonar analysis* : analyse statique du code, récupère la couverture Jacoco
+** *deploy* : tout va bien, on envoi le package dans le dépôt (snapshot ou release) de Nexus
+
+* De nombreux plugins fournissent des commandes pour le Jenkinsfile
+* Stages exécutables sur différents _agents_ (ex _slaves_) Jenkins (environnements différents)
+
+
+== Et chez vous ?
+Qui n'a *PAS* :
+
+* svn/git/...
+* Jenkins
+* SonarQube
+* Nexus
+
+== Le mois prochain
+Qui voudrait un QuarterBack sur :
+
+* Jenkins
+* SonarQube
+* Maven/Nexus
