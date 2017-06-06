@@ -31,9 +31,9 @@ Trop cool la version 2 avec _BlueOcean_ et les pipelines !
 Idéal pour les _features branch_
 
 === Sonar
-Révèle parfois des bugs fonctionnels `// *TODO* : trouver un example`
+Révèle parfois des bugs fonctionnels
 
-Highlight sur la _période de grâce_ `// *FIXME* : retrouver le nom de ce truc`
+Highlight sur la _leak period_
 
 === Nexus
 Ou Artifactory
