@@ -26,7 +26,6 @@ PROJECT
 
 SCM MANAGER
   http://sf.sfeir.com/scm
-  --> TODO: Replace local tgz by download from scmmanager website in Dockerfile
   - Password: scmadmin/scmadmin
   - Config > Allow anonymous
   - Create public git repository sfeir-demo
@@ -46,7 +45,6 @@ NEXUS
   - in Dockerfile:
     - context-path config: override 'nexus-default.properties' from Dockerfile
       - nexus-context-path=/nexus
-  - todo: try with image clearent/nexus (alpine-based) instead of sonatype/nexus3
 
 SONAR
   http://sf.sfeir.com/sonar
